@@ -245,10 +245,11 @@ const StreamSwitcher = () => {
 };
 
 export const MainStageControls = ({
+  overlayFeatureOn = false,
   showAmbientCopresenceOverlay,
   setShowAmbientCopresenceOverlay,
 }) => {
-  const {stageInfo} = useStageContext();
+  const { stageInfo } = useStageContext();
   const [controlsOpen, setControlsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [showInfoOpen, setShowInfoOpen] = useState(false);
@@ -296,32 +297,36 @@ export const MainStageControls = ({
               >
                 <CiCircleInfo className="mx-auto" />
               </button>
-              <button
-                className={`${styles.leftBarButton} ${
-                  settingsOpen ? styles.active : ""
-                }`}
-                onClick={() => {
-                  setSettingsOpen(!settingsOpen);
+              {overlayFeatureOn && (
+                <button
+                  className={`${styles.leftBarButton} ${
+                    settingsOpen ? styles.active : ""
+                  }`}
+                  onClick={() => {
+                    setSettingsOpen(!settingsOpen);
 
-                  setEmotesOpen(false);
-                  setShowInfoOpen(false);
-                }}
-              >
-                <CiSettings className="mx-auto" />
-              </button>
-              <button
-                className={`${styles.leftBarButton} ${
-                  emotesOpen ? styles.active : ""
-                }`}
-                onClick={() => {
-                  setEmotesOpen(!emotesOpen);
+                    setEmotesOpen(false);
+                    setShowInfoOpen(false);
+                  }}
+                >
+                  <CiSettings className="mx-auto" />
+                </button>
+              )}
+              {overlayFeatureOn && (
+                <button
+                  className={`${styles.leftBarButton} ${
+                    emotesOpen ? styles.active : ""
+                  }`}
+                  onClick={() => {
+                    setEmotesOpen(!emotesOpen);
 
-                  setSettingsOpen(false);
-                  setShowInfoOpen(false);
-                }}
-              >
-                <CiFaceSmile className="mx-auto" />
-              </button>
+                    setSettingsOpen(false);
+                    setShowInfoOpen(false);
+                  }}
+                >
+                  <CiFaceSmile className="mx-auto" />
+                </button>
+              )}
             </>
           )}
           <button
@@ -351,30 +356,36 @@ export const MainStageControls = ({
           left="10rem"
         />
 
-        <LeftSidePanel
-          isVisible={settingsOpen}
-          hidePanel={() => setSettingsOpen(false)}
-          bottom="3rem"
-          left="10rem"
-        >
-          <SettingsPanelContent
-            showAmbientCopresenceOverlay={showAmbientCopresenceOverlay}
-            setShowAmbientCopresenceOverlay={setShowAmbientCopresenceOverlay}
-          />
-        </LeftSidePanel>
+        {overlayFeatureOn && (
+          <LeftSidePanel
+            isVisible={settingsOpen}
+            hidePanel={() => setSettingsOpen(false)}
+            bottom="3rem"
+            left="10rem"
+          >
+            <SettingsPanelContent
+              showAmbientCopresenceOverlay={showAmbientCopresenceOverlay}
+              setShowAmbientCopresenceOverlay={
+                setShowAmbientCopresenceOverlay
+              }
+            />
+          </LeftSidePanel>
+        )}
 
-        <LeftSidePanel
-          isVisible={emotesOpen}
-          hidePanel={() => setEmotesOpen(false)}
-          bottom="3rem"
-          left="10rem"
-          height="12rem"
-        >
-          <EmotesPanelContent
+        {overlayFeatureOn && (
+          <LeftSidePanel
             isVisible={emotesOpen}
             hidePanel={() => setEmotesOpen(false)}
-          />
-        </LeftSidePanel>
+            bottom="3rem"
+            left="10rem"
+            height="12rem"
+          >
+            <EmotesPanelContent
+              isVisible={emotesOpen}
+              hidePanel={() => setEmotesOpen(false)}
+            />
+          </LeftSidePanel>
+        )}
       </div>
     </>
   );

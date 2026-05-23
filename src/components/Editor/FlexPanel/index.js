@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from "./FlexPanel.module.scss";
 import Typography from "@/components/Typography";
-import { Button, ToggleButton } from "@/components/Button";
+import { Button } from "@/components/Button";
+import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { AssetMangementPanel } from "@/components/Editor/AssetManagementPanel";
 import { useStageContext } from "@/components/StageContext";
 import { supabase } from "@/components/SupabaseClient";
@@ -12,18 +13,37 @@ const logger = debug("broadcaster:flexPanel");
 const ActionsPanel = () => {
   const { stageInfo } = useStageContext();
 
-  const toggleChatState = () => {
+  const updateStageFlag = (field, value) => {
+    if (!stageInfo?.id) return;
+
+    supabase
+      .from("stages")
+      .update({ [field]: value })
+      .eq("id", stageInfo.id)
+      .then(({ error }) => {
+        if (error) {
+          console.error(`Error updating ${field}:`, error);
+        } else {
+          logger(`Production ${field} updated successfully`);
+        }
+      });
+  };
+
+  const updateAmbientCopresence = (value) => {
+    if (!stageInfo?.id) return;
+
     supabase
       .from("stages")
       .update({
-        chat_active: stageInfo?.chat_active ? false : true,
+        ambient_copresence_active: value,
+        emotes_active: value,
       })
       .eq("id", stageInfo.id)
       .then(({ error }) => {
         if (error) {
-          console.error("Error changing chat state:", error);
+          console.error("Error updating ambient copresence:", error);
         } else {
-          logger("Production chat state changed successfully");
+          logger("Production ambient copresence updated successfully");
         }
       });
   };
@@ -43,24 +63,26 @@ const ActionsPanel = () => {
   };
 
   return (
-    <div className={`flex flex-wrap gap-4`}>
-      <ToggleButton
-        variant="primary"
-        size="small"
-        toggleActive={stageInfo?.chat_active}
-        onClick={() => {
-          var result = confirm(
-            `This will turn chat ${
-              stageInfo?.chat_active ? "off" : "on"
-            } for this production. Are you sure?`,
-          );
-          if (result) {
-            toggleChatState();
-          }
-        }}
-      >
-        Turn Chat {stageInfo?.chat_active ? `off` : `on`}
-      </ToggleButton>
+    <div className={styles.actionsPanel}>
+      <div className={styles.actionsSwitches}>
+        <div className={styles.actionsSwitchRow}>
+          <Typography variant="body3">Chat</Typography>
+          <ToggleSwitch
+            isChecked={!!stageInfo?.chat_active}
+            setIsChecked={(e) =>
+              updateStageFlag("chat_active", e.target.checked)
+            }
+          />
+        </div>
+
+        <div className={styles.actionsSwitchRow}>
+          <Typography variant="body3">Ambient Copresence & Emotes</Typography>
+          <ToggleSwitch
+            isChecked={!!stageInfo?.ambient_copresence_active}
+            setIsChecked={(e) => updateAmbientCopresence(e.target.checked)}
+          />
+        </div>
+      </div>
 
       <Button
         variant="primary"

@@ -27,7 +27,7 @@ A Next.js + Supabase application for live theatre/performance broadcasting. Supp
 ## Database Model
 
 ### `stages` table
-Core production record: `id` (UUID), `title`, `url_slug`, `creator_id`, `collaborator_ids` (UUID[]), `show_state`, `chat_active`, `lobby_webcam_microphone_available`, `poster_image_filename`.
+Core production record: `id` (UUID), `title`, `url_slug`, `creator_id`, `collaborator_ids` (UUID[]), `show_state`, `chat_active`, `ambient_copresence_active`, `emotes_active` (kept in sync with `ambient_copresence_active` via admin Actions toggle), `lobby_webcam_microphone_available`, `poster_image_filename`.
 
 Legacy columns (historic / unused by current app): `show_state` may still hold `"lobby"` on old rows — routing and UI no longer depend on it. `lobby_webcam_microphone_available` is not read or written by the app after the lobby feature was removed; it may remain in the schema for existing databases.
 

@@ -5,10 +5,17 @@ import { MainStage, MainStageControls } from "@/components/Stage";
 import { RealtimeContextProvider } from "@/components/RealtimeContext";
 import { useUserInteractionContext } from "@/components/UserInteractionContext";
 import { AudienceOnboarding } from "@/components/AudienceOnboarding";
+import { useStageContext } from "@/components/StageContext";
 
 export const AudienceView = () => {
+  const { stageInfo } = useStageContext();
   const [showAmbientCopresenceOverlay, setShowAmbientCopresenceOverlay] =
     useState(true);
+
+  const overlayFeatureOn = !!stageInfo?.ambient_copresence_active;
+  const effectiveShowOverlay =
+    overlayFeatureOn && showAmbientCopresenceOverlay;
+
   return (
     <div
       style={{
@@ -16,8 +23,9 @@ export const AudienceView = () => {
         height: "100%",
       }}
     >
-      <MainStage showAmbientCopresenceOverlay={showAmbientCopresenceOverlay} />
+      <MainStage showAmbientCopresenceOverlay={effectiveShowOverlay} />
       <MainStageControls
+        overlayFeatureOn={overlayFeatureOn}
         showAmbientCopresenceOverlay={showAmbientCopresenceOverlay}
         setShowAmbientCopresenceOverlay={setShowAmbientCopresenceOverlay}
       />
