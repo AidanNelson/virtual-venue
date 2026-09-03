@@ -2,30 +2,27 @@
   box-sizing: border-box;
   min-height: 100dvh;
   width: 100%;
-  background-color: #000000;
-  /* Full-viewport wash: black → barely-lifted dark silver (kept very subtle) */
-  /* background-image: linear-gradient(
-    120deg,
-    #333333 0%,
-    #000000 100%
-  ); */
+  background-color: #111111;
 }
 
 .landingPageContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: var(--spacing-32);
   box-sizing: border-box;
   min-height: 100dvh;
   padding-block: var(--spacing-16);
-
   margin-left: auto;
   margin-right: auto;
   max-width: 90vw;
   @media (max-width: 900px) {
     max-width: 95vw;
   }
+}
+
+.heroSection {
+  display: flex;
+  flex-direction: column;
 }
 
 .heroBanner {
@@ -41,30 +38,25 @@
 .welcomeLetter {
   color: var(--text-primary-color);
   font-family: "Replica Std";
-  /* font-size: 48px; */
   font-size: clamp(1.5rem, 3vw, 3rem);
-
   font-style: normal;
   font-weight: 400;
-  line-height: 120%; /* 57.6px */
+  line-height: 120%;
 }
 
 .poweredByText {
   color: var(--UI-White, #fff);
   text-align: right;
   font-family: "Replica Std";
-  /* font-size: 32px; */
   font-size: clamp(1rem, 2vw, 2rem);
-
   font-style: normal;
   font-weight: 400;
-  line-height: 120%; /* 38.4px */
+  line-height: 120%;
   letter-spacing: 0.96px;
 }
 
 .heroContainer {
   background-color: #fff;
-
   text-transform: uppercase;
   display: flex;
   justify-content: space-around;
@@ -72,97 +64,62 @@
 
 .heroLetter {
   color: #1e1e1e;
-
-  line-height: 120%; /* 86.4px */
+  line-height: 120%;
   font-family: "Replica Std";
   font-weight: bold;
-  /* font-size: 72px; */
   font-size: clamp(2.25rem, 4.5vw, 4.5rem);
-
   font-style: normal;
   text-align: center;
 }
 
-.aboutLink {
-  position: fixed;
-  bottom: var(--spacing-24, 1.5rem);
-  right: var(--spacing-24, 1.5rem);
-  z-index: 30;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-family: "Replica Std", sans-serif;
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
-  color: var(--text-secondary-color, #aaa);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.aboutLink:hover {
-  color: var(--text-primary-color, #fff);
-}
-
-.aboutModalBackdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
+.showsSection {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-24);
-  background: rgba(0, 0, 0, 0.65);
-}
-
-.aboutModalContent {
-  position: relative;
+  flex-direction: column;
+  gap: var(--spacing-16, 1rem);
   width: 100%;
-  max-width: 36rem;
-  max-height: min(85vh, 32rem);
-  overflow-y: auto;
-  padding: var(--spacing-48);
-  border-radius: var(--radius, 0.35rem);
-  background: var(--ui-dark-grey, #232323);
-  border: 1px solid var(--ui-grey, #444);
-  color: var(--text-primary-color, #fff);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  max-width: 600px;
+  flex-shrink: 0;
+  order: -1; /* above About when stacked */
 }
 
-.aboutModalClose {
-  position: absolute;
-  top: var(--spacing-24);
-  right: var(--spacing-24);
-  width: 2rem;
-  height: 2rem;
+.showMedia {
+  width: 100%;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.showGif {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.showMeta {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius, 0.35rem);
-  background: transparent;
-  color: var(--text-primary-color, #fff);
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-.aboutModalClose:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.aboutModalTitle {
-  margin: 0 2rem 0 0;
-  padding: 0;
+.showTitle {
+  margin: 0;
   font-family: "Replica Std", sans-serif;
   font-size: clamp(1.125rem, 2vw, 1.35rem);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.25;
+  color: var(--text-primary-color, #fff);
 }
 
-.aboutModalBody {
-  margin: var(--spacing-16) 0 0;
+.showCreator {
+  margin: 0;
+  font-family: "Replica Std", sans-serif;
+  font-size: clamp(0.875rem, 1.4vw, 1rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-secondary-color, #aaa);
+}
+
+.showDescription {
+  margin: 0.35rem 0 0;
   font-family: "Replica Std", sans-serif;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 400;
@@ -170,18 +127,153 @@
   color: var(--text-primary-color, #eee);
 }
 
-.aboutModalLearnMore {
-  margin: var(--spacing-16) 0 0;
+.showSwitcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-12, 0.75rem);
+  margin-top: var(--spacing-8, 0.5rem);
+}
+
+.showSwitcherItem {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: "Replica Std", sans-serif;
+  font-size: clamp(0.8125rem, 1.3vw, 0.9375rem);
+  line-height: 1;
+  color: var(--text-secondary-color, #aaa);
+  text-decoration: none;
+}
+
+.showSwitcherItem:hover {
+  color: var(--text-primary-color, #fff);
+}
+
+.showSwitcherItemActive {
+  color: var(--text-primary-color, #fff);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contentRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+  padding-bottom: clamp(3rem, 8vh, 5rem);
+  padding-top: 2rem;
+}
+
+.aboutSection {
+  flex: 1;
+  min-width: 0;
+  max-width: 42rem;
+  width: 100%;
+}
+
+/* Extra-wide: About left, GIFs right */
+@media (min-width: 1100px) {
+  .contentRow {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .showsSection {
+    order: 0;
+  }
+}
+
+.aboutHeading {
+  margin: 0;
+  padding: 0;
+  font-family: "Replica Std", sans-serif;
+  font-size: clamp(1.125rem, 2vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-primary-color, #fff);
+}
+
+.aboutCopy {
+  margin-top: var(--spacing-24, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 1rem);
+}
+
+.aboutCopy p {
+  margin: 0;
+  font-family: "Replica Std", sans-serif;
+  font-size: clamp(0.9375rem, 1.6vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-primary-color, #eee);
+}
+
+.credits {
+  margin-top: clamp(2rem, 5vh, 3rem);
+  padding-top: clamp(1.5rem, 4vh, 2rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.creditsHeading {
+  margin: 0 0 var(--spacing-16, 1rem);
+  font-family: "Replica Std", sans-serif;
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary-color, #fff);
+}
+
+.creditsList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12, 0.75rem);
+}
+
+.creditItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-family: "Replica Std", sans-serif;
+  line-height: 1.45;
+}
+
+.creditRole {
+  font-size: clamp(0.75rem, 1.2vw, 0.8125rem);
+  color: var(--text-secondary-color, #aaa);
+  letter-spacing: 0.02em;
+}
+
+.creditNames {
+  font-size: clamp(0.875rem, 1.4vw, 1rem);
+  color: var(--text-primary-color, #eee);
+}
+
+.aboutLearnMore {
+  margin: clamp(2rem, 5vh, 3rem) 0 0;
   font-family: "Replica Std", sans-serif;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
   line-height: 1.5;
+  color: var(--text-primary-color, #eee);
 }
 
-.aboutModalLink {
+.aboutLinkInline {
   color: var(--text-primary-color, #fff);
-  word-break: break-all;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.aboutModalLink:hover {
-  text-decoration: underline;
+.aboutLinkInline:hover {
+  color: var(--text-secondary-color, #aaa);
 }
