@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./LandingPage.module.css";
 
 const GITHUB_URL = "https://github.com/aidannelson/livelabbroadcaster";
@@ -106,6 +106,15 @@ const HeroBanner = () => {
 function ShowsGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
   const show = SHOWS[activeIndex];
+
+  useEffect(() => {
+    // start at random index, then every 5 seconds, increment the index
+    setActiveIndex(Math.floor(Math.random() * SHOWS.length));
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % SHOWS.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className={styles.showsSection} aria-label="Selected works">
